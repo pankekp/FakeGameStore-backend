@@ -16,6 +16,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+
+        <service.version>1.0-SNAPSHOT</service.version>
+        <dao.version>1.0-SNAPSHOT</dao.version>
+        <util.version>1.0-SNAPSHOT</util.version>
+        <pojo.version>1.0-SNAPSHOT</pojo.version>
+        <exception.version>1.0-SNAPSHOT</exception.version>
     </properties>
 
     <dependencyManagement>
@@ -26,6 +32,35 @@
                 <version>Cairo-SR1</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>pers.pk.store</groupId>
+                <artifactId>store-service</artifactId>
+                <version>${service.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>pers.pk.store</groupId>
+                <artifactId>store-dao</artifactId>
+                <version>${dao.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>pers.pk.store</groupId>
+                <artifactId>store-util</artifactId>
+                <version>${util.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>pers.pk.store</groupId>
+                <artifactId>store-pojo</artifactId>
+                <version>${pojo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pers.pk.store</groupId>
+                <artifactId>store-exception</artifactId>
+                <version>${exception.version}</version>
+                <scope>compile</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

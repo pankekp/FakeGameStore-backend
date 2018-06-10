@@ -22,6 +22,16 @@
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pers.pk.store</groupId>
+            <artifactId>store-service</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>store-controller</finalName>
