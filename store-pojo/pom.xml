@@ -11,6 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>store-pojo</artifactId>
+    <packaging>jar</packaging>
 
     <name>store-pojo</name>
     <!-- FIXME change it to the project's website -->

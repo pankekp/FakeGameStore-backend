@@ -1,0 +1,3 @@
+config\DaoConfig.class
+mapper\GoodMapper.class
+mapper\Mapper.class

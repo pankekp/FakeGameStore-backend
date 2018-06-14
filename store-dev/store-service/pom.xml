@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <packaging>jar</packaging>
     <artifactId>store-service</artifactId>
 
     <name>store-service</name>
@@ -29,6 +30,14 @@
         <dependency>
             <groupId>pers.pk.store</groupId>
             <artifactId>store-dao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>pers.pk.store</groupId>
+            <artifactId>store-pojo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
         </dependency>
     </dependencies>
 
