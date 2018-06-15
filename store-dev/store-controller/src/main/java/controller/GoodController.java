@@ -1,10 +1,13 @@
 package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.Game;
+import pojo.Page;
 import service.GoodService;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
  * @date created in 2018/6/10 19:39
  */
 
+@CrossOrigin(origins = "*")
 @RestController
 public class GoodController {
 
@@ -24,9 +28,9 @@ public class GoodController {
         this.goodService = goodService;
     }
 
-    @GetMapping(value = {"/findGames/{pageNum}/{pageSize}"})
-    public List<Game> getGoodsList(@PathVariable int pageNum, @PathVariable int pageSize) {
-        return goodService.getGamesByPage(pageNum, pageSize);
+    @GetMapping(value = {"/findGames"})
+    public List<Game> getGoodsList(Page page) {
+        return goodService.getGamesByPage(page.getPageNum(), page.getPageSize());
     }
 
 }

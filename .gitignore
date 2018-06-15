@@ -108,3 +108,9 @@ gen### Java template
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+/store-dev/store-controller/target/
+/store-dev/store-service/target/
+/store-dev/store-dao/target/
+/store-pojo/target/
+/store-util/target/
+/store-exception/target/

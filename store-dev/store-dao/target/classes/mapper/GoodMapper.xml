@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.GoodMapper">
 
-    <select id="findGames" resultType="Game">
+    <resultMap id="gamesRM" type="Game">
+        <result property="desc" column="description"/>
+    </resultMap>
+
+    <select id="findGames" resultMap="gamesRM">
         select *
         from games
     </select>
