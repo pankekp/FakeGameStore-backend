@@ -1,8 +1,6 @@
 package service;
 
-import pojo.Game;
-
-import java.util.List;
+import pojo.Games;
 
 /**
  * @author panke
@@ -13,10 +11,10 @@ public interface GoodService {
     /**
      * 分页查询商品
      *
-     * @param pageNum 页码
+     * @param pageNum  页码
      * @param pageSize 页面大小
-     * @return 商品列表
+     * @return 商品列表对象
      */
-    List<Game> getGamesByPage(int pageNum, int pageSize);
+    Games getGamesByPage(int pageNum, int pageSize);
 
 }

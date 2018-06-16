@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.Game;
 import mapper.GoodMapper;
+import pojo.Games;
 import service.GoodService;
 
 import java.util.List;
@@ -26,9 +27,10 @@ public class GoodServiceImpl implements GoodService {
     }
 
     @Override
-    public List<Game> getGamesByPage(int pageNum, int pageSize) {
+    public Games getGamesByPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Game> games = goodMapper.findGames();
-        return new PageInfo<>(games).getList();
+        int gamesNum = goodMapper.findGamesNum();
+        return new Games(new PageInfo<>(games).getList(), gamesNum);
     }
 }

@@ -16,4 +16,6 @@ public interface GoodMapper {
      * @return 商品列表
      */
     List<Game> findGames();
+
+    int findGamesNum();
 }

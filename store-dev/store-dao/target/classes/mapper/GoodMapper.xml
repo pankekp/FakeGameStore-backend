@@ -7,8 +7,10 @@
     </resultMap>
 
     <select id="findGames" resultMap="gamesRM">
-        select *
-        from games
+        select * from games
     </select>
 
+    <select id="findGamesNum" resultType="int">
+        select count(*) from games
+    </select>
 </mapper>

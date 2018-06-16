@@ -36,4 +36,10 @@ public class GoodMapperTest {
         }
     }
 
+    @Test
+    public void testFindGamesNum() {
+        int num = goodMapper.findGamesNum();
+        Assert.assertTrue(num == 20);
+    }
+
 }
