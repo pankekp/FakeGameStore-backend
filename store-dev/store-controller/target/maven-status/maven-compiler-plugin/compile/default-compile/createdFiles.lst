@@ -5,3 +5,4 @@ controller\Controller.class
 config\RootConfig.class
 controller\UserController.class
 controller\GoodController.class
+controller\UserExceptionController.class

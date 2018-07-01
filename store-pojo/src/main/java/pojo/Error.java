@@ -6,23 +6,23 @@ package pojo;
  */
 public class Error {
 
-    private Integer code;
+    private String title;
     private String message;
 
     public Error() {
     }
 
-    public Error(Integer code, String message) {
-        this.code = code;
+    public Error(String title, String message) {
+        this.title = title;
         this.message = message;
     }
 
-    public Integer getCode() {
-        return code;
+    public String getTitle() {
+        return title;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getMessage() {
