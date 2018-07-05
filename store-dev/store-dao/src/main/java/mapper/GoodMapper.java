@@ -17,5 +17,10 @@ public interface GoodMapper {
      */
     List<Game> findGames();
 
+    /**
+     * 统计商品数量
+     *
+     * @return 商品数量
+     */
     int findGamesNum();
 }

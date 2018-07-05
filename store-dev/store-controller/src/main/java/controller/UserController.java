@@ -1,9 +1,12 @@
 package controller;
 
+import exception.user.UserAddException;
 import exception.user.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.User;
 import service.UserService;
@@ -31,5 +34,20 @@ public class UserController {
             throw new UserNotFoundException(user);
         }
         return existUser;
+    }
+
+    @GetMapping(value = {"/findUsername"})
+    public User findUsername(User user) {
+        return userService.ValidateUsername(user);
+    }
+
+    @PostMapping(value = {"/register"})
+    public User register(@RequestBody User user) {
+        System.out.println(user.getUsername());
+        int addUserNum = userService.register(user);
+        if (addUserNum == 0) {
+            throw new UserAddException(user);
+        }
+        return new User(null, user.getUsername(), null);
     }
 }

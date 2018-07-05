@@ -3,6 +3,23 @@
 <mapper namespace="mapper.UserMapper">
 
     <select id="findUser" parameterType="User" resultType="User">
-        select id,username from user where username=#{username} and password=#{password};
+        select
+            id,
+            username
+        from user
+        where username = #{username} and password = #{password};
     </select>
+
+    <select id="findUsername" parameterType="User" resultType="User">
+        select username
+        from user
+        where username = #{username};
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into user (username,password) values (#{username},#{password})
+    </insert>
 </mapper>

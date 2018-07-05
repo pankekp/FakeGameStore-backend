@@ -35,4 +35,19 @@ public class UserMapperTest {
         User existUser = userMapper.findUser(user);
         System.out.println(existUser);
     }
+
+    @Test
+    public void testFindUsername() {
+        User user = new User(null, "testadd", null);
+        User existUser = userMapper.findUsername(user);
+        System.out.println(existUser);
+    }
+
+    @Test
+    public void testAddUser() {
+        User user = new User(null, "testAdd", "123");
+        Integer addUserNum = userMapper.addUser(user);
+        Assert.assertNotNull(addUserNum);
+        System.out.println(addUserNum);
+    }
 }
