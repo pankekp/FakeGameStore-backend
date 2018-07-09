@@ -42,4 +42,19 @@ public class GoodMapperTest {
         Assert.assertTrue(num == 20);
     }
 
+    @Test
+    public void testFindGame() {
+        int id = 1;
+        Game game = goodMapper.findGame(id);
+        Assert.assertNotNull(game);
+        System.out.println(game.getDesc());
+    }
+
+    @Test
+    public void testFindNullGame() {
+        int id = 0;
+        Game game = goodMapper.findGame(id);
+        System.out.println(game);
+    }
+
 }

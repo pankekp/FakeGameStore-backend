@@ -1,8 +1,18 @@
 package service.impl;
 
+import exception.tx.TxException;
+import exception.tx.AddCartTxException;
+import exception.tx.AddCartInfoTxException;
 import mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import pojo.Cart;
+import pojo.CartCollection;
+import pojo.CartInfo;
 import pojo.User;
 import service.UserService;
 
@@ -15,10 +25,13 @@ import service.UserService;
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper;
+    private DataSourceTransactionManager dataSourceTransactionManager;
 
     @Autowired
-    public UserServiceImpl(UserMapper userMapper) {
+    public UserServiceImpl(UserMapper userMapper,
+                           DataSourceTransactionManager dataSourceTransactionManager) {
         this.userMapper = userMapper;
+        this.dataSourceTransactionManager = dataSourceTransactionManager;
     }
 
     @Override
@@ -27,12 +40,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User ValidateUsername(User user) {
+    public User validateUsername(User user) {
         return userMapper.findUsername(user);
     }
 
     @Override
     public int register(User user) {
         return userMapper.addUser(user);
+    }
+
+    @Override
+    @Transactional
+    public CartCollection addToCart(CartCollection cartCollection) throws TxException {
+        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+        TransactionStatus transactionStatus = dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
+        try {
+            CartInfo cartInfo = new CartInfo(null, cartCollection.getGoodId(), cartCollection.getGoodNum());
+            int cartInfoRecord = userMapper.addCartInfo(cartInfo);
+            if (cartInfoRecord != 1) {
+                throw new AddCartInfoTxException("添加购物车信息表出错");
+            }
+            Cart cart = new Cart(null, cartCollection.getUserId(), cartInfo.getId());
+            int cartRecord = userMapper.addCart(cart);
+            if (cartRecord != 1) {
+                throw new AddCartTxException("添加购物车表出错");
+            }
+            dataSourceTransactionManager.commit(transactionStatus);
+            return cartCollection;
+        } catch (AddCartInfoTxException | AddCartTxException e) {
+            System.out.println(e.getMessage() + "in service");
+            dataSourceTransactionManager.rollback(transactionStatus);
+            throw new TxException(e.getMessage());
+        }
+
     }
 }

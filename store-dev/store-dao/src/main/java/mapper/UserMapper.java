@@ -1,5 +1,8 @@
 package mapper;
 
+import org.apache.ibatis.annotations.Param;
+import pojo.Cart;
+import pojo.CartInfo;
 import pojo.User;
 
 /**
@@ -31,4 +34,21 @@ public interface UserMapper {
      * @return 新增用户的数量
      */
     int addUser(User user);
+
+    /**
+     * 向购物车信息表添加记录
+     *
+     * @param cartInfo 商品id&商品数量
+     * @return 新增记录数, cartInfo中的id为新增的id
+     */
+    int addCartInfo(CartInfo cartInfo);
+
+
+    /**
+     * 向购物车表添加记录
+     *
+     * @param cart 用户id&购物车信息id
+     * @return 新增记录数, cart中的id为新增的id
+     */
+    int addCart(Cart cart);
 }

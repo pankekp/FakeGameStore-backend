@@ -30,6 +30,10 @@
             <artifactId>store-pojo</artifactId>
         </dependency>
         <dependency>
+            <groupId>pers.pk.store</groupId>
+            <artifactId>store-exception</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
         </dependency>

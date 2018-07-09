@@ -23,4 +23,12 @@ public interface GoodMapper {
      * @return 商品数量
      */
     int findGamesNum();
+
+    /**
+     * 查询指定id的商品
+     *
+     * @param gameId 商品id
+     * @return 商品详情
+     */
+    Game findGame(int gameId);
 }

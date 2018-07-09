@@ -1,5 +1,6 @@
 package service;
 
+import pojo.Game;
 import pojo.Games;
 
 /**
@@ -17,4 +18,11 @@ public interface GoodService {
      */
     Games getGamesByPage(int pageNum, int pageSize);
 
+    /**
+     * 查询指定id的商品
+     *
+     * @param gameId 商品id
+     * @return 商品详情
+     */
+    Game getGameById(int gameId);
 }

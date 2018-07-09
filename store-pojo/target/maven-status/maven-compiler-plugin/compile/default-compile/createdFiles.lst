@@ -1,5 +1,8 @@
-pojo\Error.class
+pojo\CartCollection.class
+pojo\CartInfo.class
 pojo\Game.class
 pojo\Page.class
+pojo\Cart.class
+pojo\Error.class
 pojo\Games.class
 pojo\User.class

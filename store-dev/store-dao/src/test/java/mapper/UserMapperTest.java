@@ -7,6 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import pojo.Cart;
+import pojo.CartInfo;
 import pojo.User;
 
 /**
@@ -49,5 +51,21 @@ public class UserMapperTest {
         Integer addUserNum = userMapper.addUser(user);
         Assert.assertNotNull(addUserNum);
         System.out.println(addUserNum);
+    }
+
+    @Test
+    public void TestAddCartInfo() {
+        CartInfo cartInfo = new CartInfo(null, 1, 1);
+        int record = userMapper.addCartInfo(cartInfo);
+        Assert.assertEquals(1, record);
+        System.out.println(cartInfo.getId());
+    }
+
+    @Test
+    public void testAddCart() {
+        Cart cart = new Cart(null, 1, 1);
+        int record = userMapper.addCart(cart);
+        Assert.assertEquals(1, record);
+        System.out.println(cart.getId());
     }
 }

@@ -33,4 +33,9 @@ public class GoodServiceImpl implements GoodService {
         int gamesNum = goodMapper.findGamesNum();
         return new Games(new PageInfo<>(games).getList(), gamesNum);
     }
+
+    @Override
+    public Game getGameById(int gameId) {
+        return goodMapper.findGame(gameId);
+    }
 }

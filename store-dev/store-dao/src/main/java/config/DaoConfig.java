@@ -12,6 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import mapper.Mapper;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 /**
  * @author panke
@@ -60,7 +61,7 @@ public class DaoConfig {
      * 配置mybatis的mapper映射
      *
      * @return SqlSessionFactoryBean对象
-     * @throws Exception
+     * @throws Exception getObject
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory() throws Exception {
@@ -73,5 +74,16 @@ public class DaoConfig {
                 new DefaultResourceLoader().getResource("mybatis-config.xml"));
 
         return sqlSessionFactoryBean.getObject();
+    }
+
+    /**
+     * 配置注解事务管理器
+     *
+     * @return 事务管理器
+     */
+
+    @Bean
+    public DataSourceTransactionManager annotationDrivenTransactionManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 }

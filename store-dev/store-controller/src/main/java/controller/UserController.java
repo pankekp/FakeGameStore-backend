@@ -1,5 +1,7 @@
 package controller;
 
+import exception.tx.TxException;
+import exception.user.AddCartCollectionException;
 import exception.user.UserAddException;
 import exception.user.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import pojo.CartCollection;
 import pojo.User;
 import service.UserService;
 
@@ -38,7 +41,7 @@ public class UserController {
 
     @GetMapping(value = {"/findUsername"})
     public User findUsername(User user) {
-        return userService.ValidateUsername(user);
+        return userService.validateUsername(user);
     }
 
     @PostMapping(value = {"/register"})
@@ -49,5 +52,15 @@ public class UserController {
             throw new UserAddException(user);
         }
         return new User(null, user.getUsername(), null);
+    }
+
+    @PostMapping(value = {"/addToCart"})
+    public CartCollection addToCart(@RequestBody CartCollection cartCollection) {
+        try {
+            return userService.addToCart(cartCollection);
+        } catch (TxException e) {
+            System.out.println(e.getMessage() + "in controller");
+            throw new AddCartCollectionException(cartCollection);
+        }
     }
 }

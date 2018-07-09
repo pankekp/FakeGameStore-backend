@@ -16,10 +16,15 @@
         where username = #{username};
     </select>
 
-    <insert id="addUser" parameterType="User">
-        <selectKey keyProperty="id" order="AFTER" resultType="int">
-            select LAST_INSERT_ID()
-        </selectKey>
-        insert into user (username,password) values (#{username},#{password})
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into user (username, password) values (#{username}, #{password})
+    </insert>
+
+    <insert id="addCartInfo" parameterType="CartInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into cart_info (good_id, num) values (#{goodId}, #{goodNum})
+    </insert>
+
+    <insert id="addCart" parameterType="Cart" useGeneratedKeys="true" keyProperty="id">
+        insert into cart (user_id, cart_info_id) values (#{userId}, #{cartInfoId})
     </insert>
 </mapper>

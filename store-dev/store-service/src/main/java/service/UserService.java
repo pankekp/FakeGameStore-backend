@@ -1,5 +1,7 @@
 package service;
 
+import exception.tx.TxException;
+import pojo.CartCollection;
 import pojo.User;
 
 /**
@@ -22,7 +24,7 @@ public interface UserService {
      * @param user 用户名
      * @return 已存在的用户名或null
      */
-    User ValidateUsername(User user);
+    User validateUsername(User user);
 
     /**
      * 用户注册
@@ -31,4 +33,13 @@ public interface UserService {
      * @return 新增用户的数量
      */
     int register(User user);
+
+    /**
+     * 用户向购物车添加单条商品记录
+     *
+     * @param cartCollection 用户id&商品id&商品数量
+     * @return 用户id&商品id&商品数量
+     * @throws TxException 运行时事务异常
+     */
+    CartCollection addToCart(CartCollection cartCollection) throws TxException;
 }

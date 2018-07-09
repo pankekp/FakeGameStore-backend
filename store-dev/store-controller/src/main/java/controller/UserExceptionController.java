@@ -1,5 +1,6 @@
 package controller;
 
+import exception.user.AddCartCollectionException;
 import exception.user.UserAddException;
 import exception.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,18 @@ public class UserExceptionController {
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Error userNotFound(UserNotFoundException e) {
-        String username = e.getUser().getUsername();
-        return new Error("user not found or password is incorrect", username);
+        return new Error("User not found or password is incorrect", e.getUser().getUsername());
     }
 
     @ExceptionHandler(UserAddException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Error userAddFailed(UserAddException e) {
-        return new Error("request format is not correct", null);
+        return new Error("User register failed", e.getUser().getUsername());
+    }
+
+    @ExceptionHandler(AddCartCollectionException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Error addCartCollectionFailed(AddCartCollectionException e) {
+        return new Error("Add the good to cart failed", e.getCartCollection().toString());
     }
 }
