@@ -27,4 +27,49 @@
     <insert id="addCart" parameterType="Cart" useGeneratedKeys="true" keyProperty="id">
         insert into cart (user_id, cart_info_id) values (#{userId}, #{cartInfoId})
     </insert>
+
+    <select id="getCartInfoIdByUserId" parameterType="Integer" resultType="Integer">
+        select cart_info_id
+        from cart
+        where user_id = #{userId}
+    </select>
+
+    <resultMap id="cartItemsRM" type="CartItem">
+        <result property="gameNum" column="num"/>
+        <result property="game.name" column="name"/>
+        <result property="game.stock" column="stock"/>
+        <result property="game.price" column="price"/>
+        <result property="game.id" column="gamesId"/>
+        <result property="itemId" column="cartInfoId"/>
+    </resultMap>
+
+    <select id="getCartInfo" parameterType="List" resultMap="cartItemsRM">
+        select games.id gamesId,name,stock,price,num,cart_info.id cartInfoId
+        from games,cart_info
+        where games.id=cart_info.good_id
+        and
+        cart_info.id in
+        <foreach collection="list" item="cartInfoId" open="(" separator="," close=")">
+            #{cartInfoId}
+        </foreach>
+    </select>
+
+    <update id="updateCartInfo" parameterType="List">
+        update cart_info
+        set num=
+        <foreach collection="list" item="item" index="index"
+                 separator=" " open="case id" close="end">
+            when #{item.id} then #{item.goodNum}
+        </foreach>
+        where id in
+        <foreach collection="list" index="index" item="item"
+                 separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteCartInfo">
+        delete from cart_info
+        where id = #{cartInfoId}
+    </delete>
 </mapper>

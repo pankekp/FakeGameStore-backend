@@ -13,8 +13,12 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import pojo.Cart;
 import pojo.CartCollection;
 import pojo.CartInfo;
+import pojo.CartItem;
 import pojo.User;
 import service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author panke
@@ -68,10 +72,30 @@ public class UserServiceImpl implements UserService {
             dataSourceTransactionManager.commit(transactionStatus);
             return cartCollection;
         } catch (AddCartInfoTxException | AddCartTxException e) {
-            System.out.println(e.getMessage() + "in service");
+            System.out.println(e.getMessage());
             dataSourceTransactionManager.rollback(transactionStatus);
             throw new TxException(e.getMessage());
         }
 
+    }
+
+    @Override
+    public List<CartItem> getCartItems(int userId) {
+        List<Integer> cartInfoIds = userMapper.getCartInfoIdByUserId(userId);
+        return userMapper.getCartInfo(cartInfoIds);
+    }
+
+    @Override
+    public int modifyCartItemNum(List<CartItem> cartItems) {
+        List<CartInfo> cartInfos = new ArrayList<>();
+        for (CartItem cartItem : cartItems) {
+            cartInfos.add(new CartInfo(cartItem.getItemId(), cartItem.getGame().getId(), cartItem.getGameNum()));
+        }
+        return userMapper.updateCartInfo(cartInfos);
+    }
+
+    @Override
+    public int deleteCartItem(int cartItemId) {
+        return userMapper.deleteCartInfo(cartItemId);
     }
 }

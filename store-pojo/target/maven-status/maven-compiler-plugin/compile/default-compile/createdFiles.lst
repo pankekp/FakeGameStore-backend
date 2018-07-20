@@ -3,6 +3,8 @@ pojo\CartInfo.class
 pojo\Game.class
 pojo\Page.class
 pojo\Cart.class
+pojo\Success.class
+pojo\CartItem.class
 pojo\Error.class
 pojo\Games.class
 pojo\User.class

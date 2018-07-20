@@ -2,7 +2,10 @@ package service;
 
 import exception.tx.TxException;
 import pojo.CartCollection;
+import pojo.CartItem;
 import pojo.User;
+
+import java.util.List;
 
 /**
  * @author panke
@@ -42,4 +45,29 @@ public interface UserService {
      * @throws TxException 运行时事务异常
      */
     CartCollection addToCart(CartCollection cartCollection) throws TxException;
+
+    /**
+     * 通过用户id获取购物车信息
+     *
+     * @param userId 用户id
+     * @return cartItem集合
+     */
+    List<CartItem> getCartItems(int userId);
+
+    /**
+     * 根据传入的cartItems集合与用户id更新此用户的购物车商品的数量
+     *
+     * @param cartItems cartItems集合
+     * @return 更新成功的行数，应为cartItem的个数
+     */
+    int modifyCartItemNum(List<CartItem> cartItems);
+
+    /**
+     * 根据cartItemId删除cart中的指定item
+     *
+     * @param cartItemId id
+     * @return 删除行数
+     */
+    int deleteCartItem(int cartItemId);
+
 }

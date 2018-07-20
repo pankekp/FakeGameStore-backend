@@ -2,24 +2,36 @@ package controller;
 
 import exception.tx.TxException;
 import exception.user.AddCartCollectionException;
+import exception.user.DeleteCartItemException;
+import exception.user.UpdateCartNumException;
 import exception.user.UserAddException;
 import exception.user.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.CartCollection;
+import pojo.CartItem;
+import pojo.Success;
 import pojo.User;
 import service.UserService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author panke
  * @date created in 2018/6/10 19:39
  */
 
-@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 
@@ -59,8 +71,33 @@ public class UserController {
         try {
             return userService.addToCart(cartCollection);
         } catch (TxException e) {
-            System.out.println(e.getMessage() + "in controller");
+            System.out.println(e.getMessage());
             throw new AddCartCollectionException(cartCollection);
         }
+    }
+
+    @GetMapping(value = {"/getCart"})
+    public List<CartItem> getCart(User user) {
+        return userService.getCartItems(user.getId());
+    }
+
+    @PutMapping(value = {"/updateCart"})
+    public Success updateCart(@RequestBody CartItem[] cartItems) {
+        System.out.println(cartItems[0].getGameNum());
+        List<CartItem> cartItemList = Arrays.asList(cartItems);
+        int rows = userService.modifyCartItemNum(cartItemList);
+        if (rows != cartItemList.size()) {
+            throw new UpdateCartNumException(cartItemList);
+        }
+        return new Success("Update cart num successfully", null);
+    }
+
+    @DeleteMapping(value = {"/deleteCart/{cartItemId}"})
+    public Success deleteCart(@PathVariable int cartItemId) {
+        int row = userService.deleteCartItem(cartItemId);
+        if (row != 1) {
+            throw new DeleteCartItemException(cartItemId);
+        }
+        return new Success("Delete cart item successfully", cartItemId + "");
     }
 }

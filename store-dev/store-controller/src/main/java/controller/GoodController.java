@@ -16,7 +16,6 @@ import service.GoodService;
  * @date created in 2018/6/10 19:39
  */
 
-@CrossOrigin(origins = "*")
 @RestController
 public class GoodController {
 
