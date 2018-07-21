@@ -3,6 +3,7 @@ package service;
 import exception.tx.TxException;
 import pojo.CartCollection;
 import pojo.CartItem;
+import pojo.ContactInfo;
 import pojo.User;
 
 import java.util.List;
@@ -69,5 +70,14 @@ public interface UserService {
      * @return 删除行数
      */
     int deleteCartItem(int cartItemId);
+
+    /**
+     * 根据用户id与传来的收货人信息进行下单操作
+     *
+     * @param userId      用户id
+     * @param contactInfo 收货人信息
+     * @return insert的行数
+     */
+    int submitOrder(int userId, ContactInfo contactInfo);
 
 }

@@ -14,6 +14,7 @@ import pojo.Cart;
 import pojo.CartCollection;
 import pojo.CartInfo;
 import pojo.CartItem;
+import pojo.ContactInfo;
 import pojo.User;
 import service.UserService;
 
@@ -97,5 +98,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteCartItem(int cartItemId) {
         return userMapper.deleteCartInfo(cartItemId);
+    }
+
+    @Override
+    public int submitOrder(int userId, ContactInfo contactInfo) {
+        //增加联系人信息，返回id
+        int contactInfoId = userMapper.addContactInfo(contactInfo);
+        //根据用户id查询所有的cartInfoId->getCartInfoIdByUserId
+        List<Integer> cartInfoIds = userMapper.getCartInfoIdByUserId(userId);
+        //根据得到的本用户的所有cartInfoId查询对应的cartItem->getCartInfo
+        List<CartItem> cartItems = userMapper.getCartInfo(cartInfoIds);
+        //将cartInfo表的记录批量删除
+        int rowsForDelete = userMapper.deleteCartInfos(cartItems);
+        //将得到的cartItems批量插入orderInfo表得到orderInfoId的集合
+        int rowsForOrderInfo = userMapper.addOrderInfo(cartItems);
+        //操作orders表，其插入行数应为orderInfoId的size大小
+        int rowsForOrders = userMapper.addOrders(userId, contactInfoId, cartItems);
+        return 0;
     }
 }

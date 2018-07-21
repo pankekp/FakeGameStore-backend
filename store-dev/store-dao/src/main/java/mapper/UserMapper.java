@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import pojo.Cart;
 import pojo.CartInfo;
 import pojo.CartItem;
+import pojo.ContactInfo;
 import pojo.User;
 
 import java.util.List;
@@ -88,4 +89,38 @@ public interface UserMapper {
      * @return 删除行数
      */
     int deleteCartInfo(int cartInfoId);
+
+    /**
+     * 插入新的收货人信息
+     *
+     * @param contactInfo 收货人信息
+     * @return 插入成功的行数，新增记录的id在传入的对象中
+     */
+    int addContactInfo(ContactInfo contactInfo);
+
+    /**
+     * 将根据cartInfoId获取的所有购物车记录批量插入orderInfo表
+     *
+     * @param cartItems 含有goodId与goodNum即可
+     * @return 插入的行数，cartItems的itemId为新插入记录的id
+     */
+    int addOrderInfo(List<CartItem> cartItems);
+
+    /**
+     * 根据本订单用户id、收货人信息id、订单详情id向orders表插入记录
+     *
+     * @param userId        用户id
+     * @param contactInfoId 收货人信息id
+     * @param cartItems     订单详情的集合,itemId为需要的id
+     * @return 插入记录的行数
+     */
+    int addOrders(@Param("userId") int userId, @Param("contactInfoId") int contactInfoId, @Param("cartItems") List<CartItem> cartItems);
+
+    /**
+     * 批量删除已经查询出来的cart记录
+     *
+     * @param cartItems 包含cartInfoId的cartItem集合
+     * @return 删除行数
+     */
+    int deleteCartInfos(List<CartItem> cartItems);
 }

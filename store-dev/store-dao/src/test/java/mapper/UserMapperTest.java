@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pojo.Cart;
 import pojo.CartInfo;
 import pojo.CartItem;
+import pojo.ContactInfo;
 import pojo.User;
 
 import java.util.ArrayList;
@@ -105,6 +106,41 @@ public class UserMapperTest {
     public void testDeleteCartInfo() {
         int row = userMapper.deleteCartInfo(3);
         Assert.assertEquals(1, row);
+    }
+
+    @Test
+    public void testAddContactInfo() {
+        ContactInfo contactInfo = new ContactInfo(null, "test", "13112345678", "陕西省西安市长安区", "710100");
+        int row = userMapper.addContactInfo(contactInfo);
+        Assert.assertEquals(1, row);
+        System.out.println(contactInfo.getId());
+    }
+
+    @Test
+    public void testAddOrderInfo() {
+        List<Integer> cartInfoIds = userMapper.getCartInfoIdByUserId(1);
+        List<CartItem> cartItems = userMapper.getCartInfo(cartInfoIds);
+        int rows = userMapper.addOrderInfo(cartItems);
+        Assert.assertEquals(cartItems.size(), rows);
+    }
+
+    @Test
+    public void testAddOrders() {
+        int userId = 1;
+        int contactInfoId = 1;
+        List<Integer> cartInfoIds = userMapper.getCartInfoIdByUserId(1);
+        List<CartItem> cartItems = userMapper.getCartInfo(cartInfoIds);
+        userMapper.addOrderInfo(cartItems);
+        int rows = userMapper.addOrders(userId, contactInfoId, cartItems);
+        Assert.assertEquals(cartItems.size(), rows);
+    }
+
+    @Test
+    public void testDeleteCartInfos() {
+        List<Integer> cartInfoIds = userMapper.getCartInfoIdByUserId(1);
+        List<CartItem> cartItems = userMapper.getCartInfo(cartInfoIds);
+        int rows = userMapper.deleteCartInfos(cartItems);
+        Assert.assertEquals(cartItems.size(), rows);
     }
 
 }

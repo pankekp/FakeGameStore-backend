@@ -72,4 +72,33 @@
         delete from cart_info
         where id = #{cartInfoId}
     </delete>
+
+    <insert id="addContactInfo" parameterType="ContactInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into contact_info (name, phone, address, postcode) values (#{name}, #{phone}, #{address}, #{postcode})
+    </insert>
+
+    <insert id="addOrderInfo" parameterType="List" useGeneratedKeys="true" keyProperty="itemId">
+        insert into order_info (good_id, num)
+        value
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (#{item.game.id},#{item.gameNum})
+        </foreach>
+    </insert>
+
+    <insert id="addOrders">
+        insert into orders (user_id, order_info_id, contact_info_id)
+        value
+        <foreach collection="cartItems" separator="," item="item">
+            (#{userId},#{item.itemId},#{contactInfoId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteCartInfos" parameterType="List">
+        delete from cart_info
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+            #{item.itemId}
+        </foreach>
+    </delete>
 </mapper>
