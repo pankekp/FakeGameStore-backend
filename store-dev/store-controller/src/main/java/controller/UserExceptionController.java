@@ -1,6 +1,7 @@
 package controller;
 
 import exception.user.AddCartCollectionException;
+import exception.user.AddOrderException;
 import exception.user.DeleteCartItemException;
 import exception.user.UpdateCartNumException;
 import exception.user.UserAddException;
@@ -47,5 +48,11 @@ public class UserExceptionController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Error deleteCartItemException(DeleteCartItemException e) {
         return new Error("Delete cart item failed", e.getCartItemId().toString());
+    }
+
+    @ExceptionHandler(AddOrderException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Error addOrderFailed(AddOrderException e) {
+        return new Error("Add order failed", "userId:" + e.getUserId());
     }
 }

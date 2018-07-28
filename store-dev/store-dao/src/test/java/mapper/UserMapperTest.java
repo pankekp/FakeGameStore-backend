@@ -11,6 +11,8 @@ import pojo.Cart;
 import pojo.CartInfo;
 import pojo.CartItem;
 import pojo.ContactInfo;
+import pojo.Orders;
+import pojo.OrdersTime;
 import pojo.User;
 
 import java.util.ArrayList;
@@ -128,10 +130,11 @@ public class UserMapperTest {
     public void testAddOrders() {
         int userId = 1;
         int contactInfoId = 1;
+        int orderTimeId = 1;
         List<Integer> cartInfoIds = userMapper.getCartInfoIdByUserId(1);
         List<CartItem> cartItems = userMapper.getCartInfo(cartInfoIds);
         userMapper.addOrderInfo(cartItems);
-        int rows = userMapper.addOrders(userId, contactInfoId, cartItems);
+        int rows = userMapper.addOrders(userId, contactInfoId, orderTimeId, cartItems);
         Assert.assertEquals(cartItems.size(), rows);
     }
 
@@ -141,6 +144,21 @@ public class UserMapperTest {
         List<CartItem> cartItems = userMapper.getCartInfo(cartInfoIds);
         int rows = userMapper.deleteCartInfos(cartItems);
         Assert.assertEquals(cartItems.size(), rows);
+    }
+
+    @Test
+    public void testAddOrdersTime() {
+        OrdersTime ordersTime = new OrdersTime();
+        int row = userMapper.addOrdersTime(ordersTime);
+        Assert.assertEquals(1, row);
+        System.out.println(ordersTime.getId());
+    }
+
+    @Test
+    public void testGetOrders() {
+        List<Orders> orders = userMapper.getOrders(1);
+        Assert.assertNotNull(orders);
+        System.out.println(orders.get(2).getCartItemList().size());
     }
 
 }

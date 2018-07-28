@@ -87,10 +87,10 @@
     </insert>
 
     <insert id="addOrders">
-        insert into orders (user_id, order_info_id, contact_info_id)
+        insert into orders (user_id, order_info_id, contact_info_id, orders_time_id)
         value
         <foreach collection="cartItems" separator="," item="item">
-            (#{userId},#{item.itemId},#{contactInfoId})
+            (#{userId},#{item.itemId},#{contactInfoId},#{timeId})
         </foreach>
     </insert>
 
@@ -101,4 +101,44 @@
             #{item.itemId}
         </foreach>
     </delete>
+
+    <insert id="addOrdersTime" useGeneratedKeys="true" keyProperty="id">
+        insert into orders_time values ()
+    </insert>
+
+    <resultMap id="ordersRM" type="Orders">
+        <result property="ordersTime.id" column="timeId"/>
+        <result property="ordersTime.orderTime" column="time"/>
+        <collection property="cartItemList" ofType="CartItem">
+            <result property="game.name" column="gameName"/>
+            <result property="game.price" column="gamePrice"/>
+            <result property="gameNum" column="gameNum"/>
+        </collection>
+        <collection property="contactInfoList" ofType="ContactInfo">
+            <result property="name" column="contactName"/>
+            <result property="phone" column="contactPhone"/>
+            <result property="address" column="contactAddress"/>
+            <result property="postcode" column="contactPostcode"/>
+        </collection>
+    </resultMap>
+
+    <select id="getOrders" parameterType="int" resultMap="ordersRM">
+        select
+            orders_time.id        timeId,
+            games.name            gameName,
+            games.price           gamePrice,
+            order_info.num        gameNum,
+            contact_info.name     contactName,
+            contact_info.phone    contactPhone,
+            contact_info.address  contactAddress,
+            contact_info.postcode contactPostcode,
+            orders_time.time      time
+        from orders, contact_info, order_info, orders_time, games
+        where
+            orders.user_id = #{userId}
+            and order_info_id = order_info.id
+            and contact_info_id = contact_info.id
+            and orders.orders_time_id = orders_time.id
+            and order_info.good_id = games.id;
+    </select>
 </mapper>

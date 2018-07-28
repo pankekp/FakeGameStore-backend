@@ -5,6 +5,8 @@ import pojo.Cart;
 import pojo.CartInfo;
 import pojo.CartItem;
 import pojo.ContactInfo;
+import pojo.Orders;
+import pojo.OrdersTime;
 import pojo.User;
 
 import java.util.List;
@@ -111,10 +113,11 @@ public interface UserMapper {
      *
      * @param userId        用户id
      * @param contactInfoId 收货人信息id
+     * @param timeId        订单时间id
      * @param cartItems     订单详情的集合,itemId为需要的id
      * @return 插入记录的行数
      */
-    int addOrders(@Param("userId") int userId, @Param("contactInfoId") int contactInfoId, @Param("cartItems") List<CartItem> cartItems);
+    int addOrders(@Param("userId") int userId, @Param("contactInfoId") int contactInfoId, @Param("timeId") int timeId, @Param("cartItems") List<CartItem> cartItems);
 
     /**
      * 批量删除已经查询出来的cart记录
@@ -123,4 +126,20 @@ public interface UserMapper {
      * @return 删除行数
      */
     int deleteCartInfos(List<CartItem> cartItems);
+
+    /**
+     * 添加订单时间，此id在orders用来表示同意订单的商品
+     *
+     * @param ordersTime 映射对象，用来获取id
+     * @return 新增行数
+     */
+    int addOrdersTime(OrdersTime ordersTime);
+
+    /**
+     * 根据用户id查询所有订单
+     *
+     * @param userId 用户id
+     * @return 订单类，内部分组
+     */
+    List<Orders> getOrders(int userId);
 }

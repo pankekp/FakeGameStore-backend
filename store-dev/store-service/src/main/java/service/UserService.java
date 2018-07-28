@@ -1,9 +1,11 @@
 package service;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import exception.tx.TxException;
 import pojo.CartCollection;
 import pojo.CartItem;
 import pojo.ContactInfo;
+import pojo.Orders;
 import pojo.User;
 
 import java.util.List;
@@ -77,7 +79,16 @@ public interface UserService {
      * @param userId      用户id
      * @param contactInfo 收货人信息
      * @return insert的行数
+     * @throws TxException 运行时事务异常
      */
-    int submitOrder(int userId, ContactInfo contactInfo);
+    int submitOrder(int userId, ContactInfo contactInfo) throws TxException;
+
+    /**
+     * 根据用户id查询所有订单
+     *
+     * @param userId 用户id
+     * @return 订单类，内部分组
+     */
+    List<Orders> getOrders(int userId);
 
 }

@@ -2,28 +2,27 @@ package controller;
 
 import exception.tx.TxException;
 import exception.user.AddCartCollectionException;
+import exception.user.AddOrderException;
 import exception.user.DeleteCartItemException;
 import exception.user.UpdateCartNumException;
 import exception.user.UserAddException;
 import exception.user.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pojo.CartCollection;
 import pojo.CartItem;
+import pojo.ContactInfoCollection;
+import pojo.Orders;
 import pojo.Success;
 import pojo.User;
 import service.UserService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -99,5 +98,26 @@ public class UserController {
             throw new DeleteCartItemException(cartItemId);
         }
         return new Success("Delete cart item successfully", cartItemId + "");
+    }
+
+    @PostMapping(value = {"/addOrder"})
+    public Success addOrder(@RequestBody ContactInfoCollection contactInfoCollection) {
+        int cartItemsNum = userService.getCartItems(contactInfoCollection.getUserId()).size();
+        int rows;
+        try {
+            rows = userService.submitOrder(contactInfoCollection.getUserId(), contactInfoCollection.getContactInfo());
+        } catch (TxException e) {
+            System.out.println(e.getMessage());
+            throw new AddOrderException(contactInfoCollection.getUserId());
+        }
+        if (cartItemsNum != rows) {
+            throw new AddOrderException(contactInfoCollection.getUserId());
+        }
+        return new Success("Add order successfully", "");
+    }
+
+    @GetMapping(value = {"/getOrder/{userId}"})
+    public List<Orders> getOrder(@PathVariable int userId) {
+        return userService.getOrders(userId);
     }
 }
