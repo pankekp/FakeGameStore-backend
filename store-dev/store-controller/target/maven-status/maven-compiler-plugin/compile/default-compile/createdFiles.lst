@@ -1,8 +1,8 @@
-config\WebConfig.class
-controller\GoodExceptionController.class
-config\Initializer.class
-controller\Controller.class
-config\RootConfig.class
-controller\UserController.class
-controller\GoodController.class
-controller\UserExceptionController.class
+config/WebConfig.class
+controller/UserController.class
+config/Initializer.class
+controller/GoodExceptionController.class
+controller/UserExceptionController.class
+controller/GoodController.class
+controller/Controller.class
+config/RootConfig.class

@@ -1,4 +1,4 @@
-mapper\UserMapper.class
-config\DaoConfig.class
-mapper\GoodMapper.class
-mapper\Mapper.class
+mapper/UserMapper.class
+mapper/Mapper.class
+mapper/GoodMapper.class
+config/DaoConfig.class

@@ -56,8 +56,8 @@
             <artifactId>druid</artifactId>
         </dependency>
         <dependency>
-            <groupId>mysql.community</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-java-connector</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.pagehelper</groupId>

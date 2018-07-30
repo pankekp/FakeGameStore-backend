@@ -1,6 +1,6 @@
-service\impl\UserServiceImpl.class
-config\ServiceConfig.class
-service\Service.class
-service\UserService.class
-service\GoodService.class
-service\impl\GoodServiceImpl.class
+service/UserService.class
+config/ServiceConfig.class
+service/impl/UserServiceImpl.class
+service/GoodService.class
+service/Service.class
+service/impl/GoodServiceImpl.class
