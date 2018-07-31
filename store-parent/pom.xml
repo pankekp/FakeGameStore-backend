@@ -18,7 +18,6 @@
         <module>../store-dev</module>
         <module>../store-exception</module>
         <module>../store-pojo</module>
-        <module>../store-util</module>
     </modules>
 
     <properties>
@@ -29,7 +28,6 @@
         <!--project module-->
         <service.version>1.0-SNAPSHOT</service.version>
         <dao.version>1.0-SNAPSHOT</dao.version>
-        <util.version>1.0-SNAPSHOT</util.version>
         <pojo.version>1.0-SNAPSHOT</pojo.version>
         <exception.version>1.0-SNAPSHOT</exception.version>
         <!--dao module-->
@@ -61,12 +59,6 @@
                 <groupId>pers.pk.store</groupId>
                 <artifactId>store-dao</artifactId>
                 <version>${dao.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>pers.pk.store</groupId>
-                <artifactId>store-util</artifactId>
-                <version>${util.version}</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
